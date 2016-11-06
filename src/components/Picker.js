@@ -19,7 +19,7 @@ class Picker extends Component {
       <div className="Picker">
         {type} :
         <input
-          defaultValue={app[type]}
+          value={app[type]}
           placeholder={type}
           type="number"
           min="1"

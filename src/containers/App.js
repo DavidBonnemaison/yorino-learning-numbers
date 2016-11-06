@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import * as AppActions from '../actions/App';
 
 import Picker from './../components/Picker';
@@ -13,18 +13,18 @@ class App extends Component {
 
   render() {
 
-    const { app } = this.props;
+    const {app} = this.props;
 
     let content = () => {
       switch (app.part) {
         case 1:
-          return <PartOne />
+          return <PartOne numbers={[1,2,3]}/>;
         case 2:
-          return <PartTwo />
+          return <PartTwo />;
         case 3:
-          return <PartThree />
+          return <PartThree />;
         case 4:
-          return <PartFour />
+          return <PartFour />;
         default:
           break;
       }

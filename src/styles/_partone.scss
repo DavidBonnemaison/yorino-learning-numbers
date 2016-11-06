@@ -1,0 +1,14 @@
+.Label {
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin: 1em;
+  display: inline-block;
+  background-color: transparent;
+  color: black;
+  transition: 200ms all ease-in-out;
+}
+
+.Label--blinking {
+  background-color: red;
+  color: white;
+}

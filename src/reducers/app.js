@@ -11,7 +11,7 @@ function generatePart(n) {
 const initialState = {
   part: 1,
   level: 1,
-  step: 1,
+  step: 0,
   available: [
     generatePart(1),
     generatePart(2),
