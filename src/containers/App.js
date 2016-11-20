@@ -13,7 +13,7 @@ class App extends Component {
 
   render() {
 
-    const {app} = this.props;
+    const {app, sound} = this.props;
 
     let content = () => {
       switch (app.part) {
@@ -28,7 +28,7 @@ class App extends Component {
         default:
           break;
       }
-    }
+    };
 
     return (
       <div>
@@ -44,7 +44,8 @@ class App extends Component {
 function mapStateToProps(state) {
   console.log(state);
   return {
-    app: state.app
+    app: state.app,
+    sound: state.sound
   };
 }
 

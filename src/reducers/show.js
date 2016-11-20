@@ -1,8 +1,8 @@
 const initialState = null;
 
-export default function expect(state = initialState, action) {
+export default function show(state = initialState, action) {
   switch (action.type) {
-    case 'UPDATE_EXPECT':
+    case 'UPDATE_SHOW':
       return action.value;
     default:
       return state;

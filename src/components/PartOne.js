@@ -1,9 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import * as PickerActions from './../actions/Picker';
 import * as ExpectActions from './../actions/Expect';
+import * as ShowActions from './../actions/Show';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {sample} from 'lodash';
+import Sound from './../components/Sound';
 
 class PartOne extends Component {
 
@@ -11,17 +13,17 @@ class PartOne extends Component {
     super(props, context);
   }
 
+  mustRemind(prevExpect, currentExpect) {
+    return prevExpect === currentExpect;
+  }
 
   render() {
 
-    const {pickerActions, expectActions, app, numbers, expect} = this.props;
+    const {pickerActions, expectActions, showActions, app, numbers, expect, show, reminder} = this.props;
     const setter = (item, val) => pickerActions.updateStep(item, val);
 
     const checkAnswer = e => {
       const correctGuess = Number(e.target.innerText) === expect;
-      console.log(e.target.innerText);
-      console.log(app.expect);
-      console.log(correctGuess);
     };
 
     const showLabels = () => {
@@ -29,13 +31,17 @@ class PartOne extends Component {
         const labels = Array.from(document.querySelectorAll(".Label"));
         labels.forEach((label, i) => {
           setTimeout(()=> {
+            showActions.updateShow(i + 1);
             label.classList.add('Label--blinking');
             setTimeout(() => {
               label.classList.remove('Label--blinking');
             }, 3000);
           }, (3000 * i + 1));
         });
-        setTimeout(() => setter('step', 0), (labels.length) * 3000);
+        setTimeout(() => {
+          showActions.updateShow(null);
+          return setter('step', 0);
+        }, (labels.length) * 3000);
       }, 1000);
     };
 
@@ -65,19 +71,32 @@ class PartOne extends Component {
 
     switch (app.step) {
       case 1:
-        showLabels();
+        if (!show) {
+          showLabels();
+        }
         break;
       case 2 :
-        const toGuess = sample(numbers);
-        expectActions.updateExpect(toGuess);
+        let toGuess;
+        if (!expect) {
+          toGuess = 1;
+          expectActions.updateExpect(toGuess);
+          expectActions.checkReminder(toGuess);
+        }
         break;
       default:
         break;
     }
 
+    if (reminder.checkRemind) {
+      if (this.mustRemind(reminder.checkRemind, expect)) {
+        
+      }
+    }
+
     return (
       <div>
         { app.step === 1 ? step1 : app.step === 2 ? step2 : step0 }
+        <Sound />
       </div>
     )
   }
@@ -87,14 +106,17 @@ class PartOne extends Component {
 function mapStateToProps(state) {
   return {
     app: state.app,
-    expect: state.expect
+    expect: state.expect,
+    show: state.show,
+    reminder: state.reminder
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     pickerActions: bindActionCreators(PickerActions, dispatch),
-    expectActions: bindActionCreators(ExpectActions, dispatch)
+    expectActions: bindActionCreators(ExpectActions, dispatch),
+    showActions: bindActionCreators(ShowActions, dispatch)
   };
 }
 
