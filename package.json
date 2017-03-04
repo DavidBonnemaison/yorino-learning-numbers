@@ -1,7 +1,7 @@
 {
-  "name": "yorino-montessori",
+  "name": "yorino-learning-numbers",
   "version": "0.0.1",
-  "description": "Yorino montessori",
+  "description": "Yorino learning numbers",
   "scripts": {
     "clean": "rimraf dist",
     "build:webpack": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
